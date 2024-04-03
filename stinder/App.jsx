@@ -54,18 +54,31 @@ const App = () => {
            return;
          } 
 
-         translateX.value = withSpring(
-          hiddenTranslateX = Math.sign(event.velocityX),
-          {},
-          () =>    runOnJS(setCurrentIndex)(currentIndex + 1),
-         );
-       },
-    });
+         const swipeDirection = Math.sign(event.velocityX);
 
-    useEffect(() => {
-      translateX.value = 0;
-      setNextIndex(currentIndex +1);
-    }, [currentIndex, translateX]);
+         // Use the swipe direction to determine the next index
+         const nextIndex = currentIndex + swipeDirection;
+
+        // Ensure the next index is within the bounds of your users array
+        if (nextIndex >= 0 && nextIndex < users.length) {
+           translateX.value = withSpring(hiddenTranslateX * swipeDirection, {}, () => {
+              // Update the current index after the animation completes
+               runOnJS(setCurrentIndex)(nextIndex);
+              });
+            } else {
+              // If the next index is out of bounds, reset the position
+              translateX.value = withSpring(0);
+              }
+          },
+        });
+
+        useEffect(() => {
+          translateX.value = 0;
+          // Ensure nextIndex is always one ahead of currentIndex
+          setNextIndex(currentIndex + 1);
+         }, [currentIndex, translateX]);
+
+
 
     
     return (
