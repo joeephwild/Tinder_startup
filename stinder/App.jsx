@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text, useWindowDimensions} from 'react-native';
+import {View, StyleSheet, Image, useWindowDimensions} from 'react-native';
 import Card from './src/components/TinderCard';
 import users from './assets/data/users';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, useAnimatedGestureHandler, useDerivedValue, interpolate, runOnJS } from 'react-native-reanimated';
 import { PanGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler';
+import Like from './assets/images/LIKE.png';
+import Nope from './assets/images/nope.png';
+
 
 const ROTATION = 60;
 const SWIPE_VELOCITY = 800;
@@ -41,6 +44,14 @@ const App = () => {
       ),
     }));
 
+    const likeStyle = useAnimatedStyle(() => ({
+      opacity: 0,
+    }));
+
+    const nopeStyle = useAnimatedStyle(() => ({
+        opacity: 1,
+    }));
+
     const gestureHandler = useAnimatedGestureHandler({
        onStart: (_, ctx) => {
          ctx.startX = translateX.value;
@@ -72,11 +83,10 @@ const App = () => {
           },
         });
 
-        useEffect(() => {
-          translateX.value = 0;
-          // Ensure nextIndex is always one ahead of currentIndex
-          setNextIndex(currentIndex + 1);
-         }, [currentIndex, translateX]);
+     useEffect(() => {
+       translateX.value = 0;
+       setNextIndex(currentIndex + 1);
+      }, [currentIndex, translateX]);
 
 
 
@@ -94,6 +104,8 @@ const App = () => {
          {currentProfile && ( 
           <PanGestureHandler onGestureEvent={gestureHandler}>
             <Animated.View style={[styles.animatedCard, cardStyle]}>
+              <Animated.Image source={Like} style={[styles.like, {left: 5}, likeStyle]} resizeMode="contain" />
+              <Animated.Image source={Nope} style={[styles.like, {right: 5}, nopeStyle]} resizeMode="contain" />
               <Card user={currentProfile} />
             </Animated.View>
           </PanGestureHandler>
@@ -110,17 +122,23 @@ const styles = StyleSheet.create({
     flex: 1,
  },
  animatedCard: {
-    width: '100%', 
-    height: '100%',
-    flex: 1,
+    width: '90%', 
+    height: '70%',
     justifyContent: 'center',
     alignItems: 'center',
  },
  nextCardContainer: {
   ...StyleSheet.absoluteFillObject,
-  width: '100%',
   justifyContent: 'center',
   alignItems: 'center',
+ },
+ like: {
+  width: 150,
+  height: 150,
+  position: 'absolute',
+  top: '10',
+  zIndex: 1,
+  elevation: 1,
  },
 });
 
