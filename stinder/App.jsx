@@ -8,10 +8,24 @@ import {
 } from 'react-native-gesture-handler';
 
 const App = () => {  
+
+  const onSwipeLeft = (user) => {
+    console.warn("swipe left", user.name)
+  };
+
+  const onSwipeRight = (user) => {
+    console.warn("swipe right", user.name)
+  };
+
+
+
+
     return (
       <GestureHandlerRootView style={{flex: 1}}>
         <View style={styles.pageContainer}>
         <AnimatedStack data={users} renderItem={(({ item }) => <Card user={item} />)}
+        onSwipeLeft={onSwipeLeft}
+        onSwipeRight={onSwipeRight}
         />         
         </View>
       </GestureHandlerRootView>
