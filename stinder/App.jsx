@@ -2,14 +2,30 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Image, useWindowDimensions} from 'react-native';
 import Card from './src/components/TinderCard';
 import users from './assets/data/users';
-import AnimatedStack from './src/components/TinderCard/AnimatedStack';
-
+import AnimatedStack from './src/components/AnimatedStack';
+import {
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler';
 
 const App = () => {  
+
+  const onSwipeLeft = (user) => {
+    console.warn("swipe left", user.name)
+  };
+
+  const onSwipeRight = (user) => {
+    console.warn("swipe right", user.name)
+  };
+
+
+
+
     return (
       <GestureHandlerRootView style={{flex: 1}}>
         <View style={styles.pageContainer}>
         <AnimatedStack data={users} renderItem={(({ item }) => <Card user={item} />)}
+        onSwipeLeft={onSwipeLeft}
+        onSwipeRight={onSwipeRight}
         />         
         </View>
       </GestureHandlerRootView>
