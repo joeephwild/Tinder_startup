@@ -2,8 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Image, useWindowDimensions} from 'react-native';
 import Card from './src/components/TinderCard';
 import users from './assets/data/users';
-import AnimatedStack from './src/components/TinderCard/AnimatedStack';
-
+import AnimatedStack from './src/components/AnimatedStack';
+import {
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler';
 
 const App = () => {  
     return (
