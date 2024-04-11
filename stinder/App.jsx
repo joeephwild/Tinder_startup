@@ -4,6 +4,9 @@ import {
   GestureHandlerRootView,
 } from 'react-native-gesture-handler';
 import HomeScreen from './src/screens/HomeScreen';
+import MatchesScreen from './src/screens/MatchesScreen';
+
+
 
 const App = () => {  
 
@@ -12,7 +15,7 @@ const App = () => {
     return (
       <GestureHandlerRootView style={{flex: 1}}>
         <View style={styles.pageContainer}>
-          <HomeScreen />        
+          <MatchesScreen />       
         </View>
       </GestureHandlerRootView>
     );
