@@ -90,7 +90,7 @@ const AnimatedStack = props => {
         );
 
         const onSwipe = event.velocityX > 0 ? onSwipeRight : onSwipeLeft;
-        onSwipe && runOnJSonSwipe(currentProfile);
+        onSwipe && runOnJS(onSwipe)(currentProfile);
     },
   });
 
